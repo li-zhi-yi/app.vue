@@ -1,7 +1,6 @@
 <template>
     <div class="category">
-        <category-header class="category-header">
-            <input type="text" slot="center" class="center">
+        <category-header class="category-header" @click.native="categorysearch">
             <img src="./img/放大镜.png" slot="right" class="right">
         </category-header>
         <div class="category-container" >
@@ -20,15 +19,9 @@
     height:617px;
     overflow:hidden;
     &-header{
-        input{
-            width: 300px;
-            height:30px;
-            border:0.5px solid black;
-            border-radius:15px;
-            box-shadow:none;
-        }
+        background-color:red;
         .right{
-            width: 30px;
+            width: 20px;
         }
     }
     .category-container{
@@ -41,7 +34,7 @@
             width: 120px;
             overflow-x:hidden;
             overflow-y:auto;
-            border-right:4px solid grya;
+            border-right:4px solid gray;
         }
         &-right{
             flex:1;
@@ -65,6 +58,9 @@ export default {
         receiveMsg(id){
             this.curId=id;
             console.log(id)
+        },
+        categorysearch(){
+            this.$router.push('/search')
         }
     }
 }

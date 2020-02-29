@@ -1,18 +1,31 @@
 <template>
     <div class="search">
-        <i class="iconfont icon-search"></i>
-        <input type="text" class="search-box" placeholder="请输入搜索内容">
+        <i class="iconfont icon-search search-left"></i>
+        <input type="text"
+               class="search-box"
+               :placeholder="placeholder"
+               @input="getvalue"
+               v-model="text"
+               ref="input"
+        />
+        <i class="iconfont icon-close search-right" v-if="text" @click="clearText"></i>
     </div>
 </template>
 <style lang="scss">
 .search{
-    display:flex;
-    align-items:center;
     width: 100%;
     height:50px;
     padding:0 7px;
-    background-color: #fff;
     border-radius:50%;
+    position:relative;
+}
+.search-left{
+    position: absolute;
+    left:5px;
+}
+.search-right{
+    position: absolute;
+    right:20px;
 }
 .iconfont{
     color:#ccc;
@@ -20,9 +33,14 @@
     font-weight: bold;
 }
 .search-box{
-    flex: 1;
-    background: none;
-    margin: 0 6px;
+    width: 80%;
+    position:absolute;
+    left:0;
+    margin:25px 0;
+    top:-16px;
+    background: transparent;
+    padding-left:20px;
+    height: 25px;
     color: #666;
     box-shadow:none;
     outline:none;
@@ -32,61 +50,68 @@
 }
 </style>
 <script>
-    // export default{
-    //     data(){
-    //         return {
-    //             msg:'',
-    //             recommends:[]
-    //         }
-    //     },
-    //     created(){
-    //         this.jsp().then((data)=>{
-    //             if(data){
-    //                 console.log(data);
-    //                 // console.log(this.recommends.concat(data.itemList));
-    //                 this.curPage++;
-    //                 this.totalPage=data.totalPage;
-    //                 this.recommends=this.recommends.concat(data.itemList);
-    //                 console.log(this.recommends)
-    //                 // this.$emit('')
-    //             }
-    //         }).catch(err=>{console.log(err)})
-    // },
-    //     methods: {
-    //         searchValue() {
-    //             let  result={...this.recommends};
-    //             this.msg = this.$refs.input.value;
-    //             // console.log(result);
-    //             // let  arr=result.filter((item)=>{
-    //             //     console.log(item);
-    //             //     return item.name.indexOf(this.msg)>-1;
-    //             // })
-    //             // console.log(this.msg)
-    //         },
-    //         //封装jsonp
-    //         jsp(baseUrl = 'https://ju.taobao.com/', method = 'json/tg/ajaxGetItemsV2.json', page = 1, psize = 20) {
-    //             let data = {
-    //                 page,
-    //                 psize,
-    //                 type: 0,
-    //                 frontCatId: ''
-    //             };
-    //             if (this.curPage > this.totalPage) {
-    //                 return console.log('没有更多了');
-    //             }
-    //             // baseUrl就是服务器地址
-    //             let url = `${baseUrl}${method}?`;
-    //             //jsonp请求参数和get方法类似,都是params的方法拼接
-    //             for (let item in data) {
-    //                 url += `&${item}=${data[item]}`;
-    //             }
-    //             return this.$jsonp(url);
-    //         }
-    //     },
-    //     watch:{
-    //         msg(value){
-    //             this.sendMsg(value)
-    //         }
-    //     }
-    // }
+    import {debounce} from '../../assets/JS/util';
+    import {searchMixin} from './mixins';
+    import $jsonp from 'jsonp'
+    export default {
+        props:{
+            placeholder:{
+                type:String,
+                default:'开学季有礼,好货五折起'
+            }
+        },
+        mixins: [searchMixin],
+        data(){
+            return {
+                show:false,
+                text:''
+            }
+        },
+        methods:{
+            getvalue(){
+                debounce(this.getSearchResult(),100)
+                // console.log(this.text);
+            },
+            clearText(){
+                this.text=''
+            },
+            //获取搜索结果数据 --jsonp
+            getSearchResult(keyword){
+                const url='https://suggest.taobao.com/sug';
+                const params = {
+                    q: keyword,
+                    code: 'utf-8',
+                    area: 'c2c',
+                    nick: '',
+                    sid: null
+                };
+                const jsonpOptions = {
+                    param: 'callback',
+                    timeout: 10000
+                };
+                return $jsonp(url,params,jsonpOptions).then(res=>{
+                    console.log(res);
+                    if(res.result){
+                        console.log(res);
+                        return res.result;
+                    }
+                    throw new Error('没有成功获取到数据')
+                }).catch(res=>{
+                    if(err){}
+                    console.log(err);
+                }).then(res=>{
+                    return new Promise(resolve=>{
+                        setTimeout(()=>{
+                            resolve(res);
+                        },1000)
+                    })
+                })
+            }
+        },
+       watch:{
+           getvalue(value){
+                this.$emit('See',this.text);
+            }
+       }
+    }
 </script>

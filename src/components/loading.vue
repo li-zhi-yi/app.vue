@@ -1,9 +1,9 @@
 <template>
     <div class="loading" :class="{'loading-inline':inline}">
-        <span class="loading-indicator" v-if="indicator==='on'">
-                <img src="../assets/img/loading.gif" alt="loading">
+        <span class="loading-indicator">
+               <slot> <img src="../assets/img/loading.gif" alt="loading"></slot>
         </span>
-        <span class="loading-text" v-if="text"></span>
+        <span v-text="text" v-if="text"></span>
     </div>
 </template>
 <style lang="scss">
@@ -27,23 +27,21 @@
 <script>
     export default{
         props:{
-            type:String,
-            default:'on',
-            validator(value){
-                return ['on','off'].indexOf(value)>-1;
+            indicator:{
+                type:String,
+                default:'on',
+                validator(value){
+                    return ['on','off'].indexOf(value)>-1;
+                }
+            },
+            inline:{
+                type:Boolean,
+                default:false
             }
-        },
-        text:{
-            type:String,
-            default:'加载中....'
-        },
-        inline:{
-            type:Boolean,
-            default:false
         },
         data(){
             return {
-                loadingText:this.text
+                text:'加载中....'
             }
         },
         watch:{

@@ -13,6 +13,7 @@
         list-style:none;
         padding-left:0;
         text-align:center;
+        margin:0;
         padding-top:0;
         background-color: #EEEEEE;
         overflow:hidden;

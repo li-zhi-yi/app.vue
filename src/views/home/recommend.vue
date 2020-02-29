@@ -3,7 +3,15 @@
         <h3 class="recommend-title">热卖推荐</h3>
         <ul class="recommend-list">
             <router-link 
-            class="recommend-item" v-for="(item,index) in recommends" :key="index" :to="{name: 'home-product', params: {id: item.baseinfo.itemId}}" tag='li'>
+            class="recommend-item" v-for="(item,index) in recommends" :key="index" :to="{name: 'home-product',
+             params: {
+             id: item.baseinfo.itemId,
+             name:item.name.shortName,
+             img:item.baseinfo.picUrlNew,
+             price:item.price.origPrice,
+             actPrice:item.price.actPrice,
+             soldCount:item.remind.soldCount
+            }}" tag='li'>
                  <p class="recommend-name">
                         {{item.name.shortName}}
                 </p>
@@ -41,7 +49,7 @@
                 flex-direction: column;
                 .recommend-img{
                     width: 100%;
-                    height: 220px;
+                    height: 360px;
                 }
                 .recommend-name{
                     color:yellowgreen;
@@ -76,7 +84,7 @@
         created(){
         this.jsp().then((data)=>{
             if(data){
-                    // console.log(this.recommends.concat(data.itemList))
+                    // console.log(this.recommends.concat(data.itemList));
                     this.curPage++;
                     this.totalPage=data.totalPage;
                     this.recommends=this.recommends.concat(data.itemList)

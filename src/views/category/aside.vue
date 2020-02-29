@@ -136,7 +136,7 @@ export default {
         curId(curId){
             this.$http.get(`http://www.imooc.com/api/category/content/${curId}`,
             {timeout:10000}).then(res=>{
-                console.log(res.data.content);
+                // console.log(res.data.content);
                 if(res.data.code==0 && res.data.content!==''){
                     this.content=res.data.content
                 }else{

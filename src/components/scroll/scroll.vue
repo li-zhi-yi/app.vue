@@ -49,29 +49,27 @@
                 default: false
             }
         },
-        // data() {
-        //   return { // 下拉参数设置
-        //     pulling: false,
-        //     pullDownText: PULL_DOWN_TEXT_INIT,
-        //     pullUpText: PULL_DOWN_TEXT_INIT,//没有
-        //     swiperOption: {
-        //       direction: 'vertical',
-        //       slidesPerView: 'auto',
-        //       freeMode: true,
-        //       setWrapperSize: true,
-        //       scrollbar: {
-        //         el: this.scrollbar ? '.swiper-scrollbar' : null,
-        //         hide: true
-        //       },
-        //       on: {
-        //         sliderMove: this.scroll,
-        //         touchEnd: this.touchEnd,
-        //         // transitionEnd: this.scrollEnd
-        //       }
-        //     }
-        //   };
-        // },
-
-
+        data() {
+          return { // 下拉参数设置
+            pulling: false,
+            pullDownText: PULL_DOWN_TEXT_INIT,
+            pullUpText: PULL_DOWN_TEXT_INIT,//没有
+            swiperOption: {
+              direction: 'vertical',
+              slidesPerView: 'auto',
+              freeMode: true,
+              setWrapperSize: true,
+              scrollbar: {
+                el: this.scrollbar ? '.swiper-scrollbar' : null,
+                hide: true
+              },
+              on: {
+                sliderMove: this.scroll,
+                touchEnd: this.touchEnd,
+                // transitionEnd: this.scrollEnd
+              }
+            }
+          };
+        }
     }
 </script>

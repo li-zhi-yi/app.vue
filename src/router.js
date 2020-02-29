@@ -31,7 +31,7 @@ const routes=[
     component:()=>import('./views/personal/personal')
   },
   {
-    path:'*',
+    path:'/',
     redirect:()=>import('./views/home/home')
   }
 ];

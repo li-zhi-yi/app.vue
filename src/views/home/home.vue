@@ -2,13 +2,12 @@
     <div class="home">
      <home-header class="home-header">
       <i class="iconfont icon-scan" slot="left"></i>
-          <div slot="center" @click=routerTo>搜索框</div>
+         <home-search slot="center" @click.native='routerTo' class="home-search"></home-search>
       <router-link slot="right" to='/personal' >
         <img src="../../assets/img/小房子.png" class="home-right" alt="photo">
       </router-link>
     </home-header>
     <div class="container" >
-<!--        <home-loading ></home-loading>-->
        <home-scroll/>
         <home-swiper ></home-swiper>
         <home-nav ></home-nav>
@@ -44,6 +43,9 @@
     overflow-y:scroll;
 }
 }
+.home-search{
+    background-color:transparent;;
+}
 </style>
 <script>
 import HomeHeader from '../../components/Heaer';
@@ -52,8 +54,9 @@ import HomeNav from './nva';
 import HomeRecommend from './recommend';
 import HomeLoading from '../../components/loading';
 import HomeScroll from '../../components/scroll/scroll';
+import HomeSearch from '../search/searchbox'
 export default {
-    components:{HomeHeader,HomeSwiper,HomeNav,HomeRecommend,HomeLoading,HomeScroll},
+    components:{HomeHeader,HomeSwiper,HomeNav,HomeRecommend,HomeLoading,HomeScroll,HomeSearch},
     data(){
         return {
             recommends:'',

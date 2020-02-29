@@ -5,13 +5,25 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-      search:''
+      num:0,
+      actPrice:'',
+      img:''
   },
   mutations: {
-    updateSearch(state,value){
-      console.log(state,value)
-        state.search=value;
-    }
+      add(state,value){
+          // console.log(111);
+          this.state.num+=value
+      },
+      cutDown(state,value){
+          // console.log(111);
+          if(state.num>0)
+          this.state.num+=value
+      },
+      updatePrice(state,e){
+          this.state.actPrice=e.actPrice;
+          this.state.img=e.img;
+          console.log(state.actPrice);
+      }
   },
   actions: {
 
